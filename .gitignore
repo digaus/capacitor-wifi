@@ -1,0 +1,9 @@
+dist/
+node_modules/
+.gradle/
+.settings/
+
+Pods
+Build
+*.iml
+.idea

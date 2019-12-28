@@ -1,0 +1,49 @@
+{
+  "name": "capacitor-wifi",
+  "version": "0.0.1",
+  "description": "Capacitor Wifi Plugin",
+  "main": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf ./dist",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "Dirk Gausmann",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/core": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^3.2.4",
+    "@capacitor/ios": "latest",
+    "@capacitor/android": "latest"
+  },
+  "files": [
+    "dist/",
+    "ios/",
+    "android/",
+    "CapacitorWifi.podspec"
+  ],
+  "keywords": [
+    "capacitor",
+    "plugin",
+    "native"
+  ],
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    },
+    "android": {
+      "src": "android"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "digaus/capacitor-wifi"
+  },
+  "bugs": {
+    "url": "digaus/capacitor-wifi/issues"
+  }
+}
