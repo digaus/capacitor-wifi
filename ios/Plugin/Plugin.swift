@@ -9,7 +9,7 @@ import CoreLocation
  */
 
 class WifiHandler: NSObject, CLLocationManagerDelegate {
-    var locManager : CLLocationManager!
+    var locationManager : CLLocationManager!
     var call: CAPPluginCall
 
     init(call: CAPPluginCall) {
@@ -20,49 +20,29 @@ class WifiHandler: NSObject, CLLocationManagerDelegate {
     }
     @objc func checkSSID() {
         if #available(iOS 13.0, *) {
-             let enabled = CLLocationManager.locationServicesEnabled()
-             let status = CLLocationManager.authorizationStatus()
-
-             if status == .denied {
-                 call.error("LOCATION_DENIED");
-             }
-             
-             if status == .notDetermined || !enabled {
-                if  locManager == nil {
-                    requestPermission()
-                }
-                // TODO temp fix
-
-                usleep(500)
-                checkSSID()
-
-             }
-            
-             if status == .authorizedWhenInUse {
-                getConnectedSSID()
-             }
+            requestPermission()
         } else {
             getConnectedSSID()
         }
     }
 
     @objc func requestPermission() {
-        locManager = CLLocationManager()
-        locManager.delegate = self
-        locManager.requestWhenInUseAuthorization()
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
     }
     
     // TODO not being called
-    @objc func locManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined:
             manager.requestWhenInUseAuthorization()
             break
         case .authorizedWhenInUse:
-            getConnectedSSID()
+            self.getConnectedSSID()
             break
         case .authorizedAlways:
-            getConnectedSSID()
+            self.getConnectedSSID()
             break
         case .restricted:
             call.error("LOCATION_DENIED");
